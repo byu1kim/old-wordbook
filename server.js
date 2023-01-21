@@ -1,44 +1,42 @@
-const express = require("express");
+import express from "express";
+import * as db from "./database.js";
+
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("build"));
 
-const wordbook = [
-  {
-    id: 1,
-    english: "key",
-    korean: "열쇠",
-  },
-  {
-    id: 2,
-    english: "instagram",
-    korean: "인스타그램",
-  },
-  {
-    id: 3,
-    english: "find",
-    korean: "찾다",
-  },
-  {
-    id: 1,
-    english: "key",
-    korean: "열쇠",
-  },
-];
-
-app.use(express.static("build")); // build: react build 후 생겨난 폴더 이름
-
-app.get("/api/words", (req, res) => {
+app.get("/api/words", async (req, res) => {
   console.log("GET /");
+  const wordbook = await db.getAll();
   res.send(wordbook);
+});
+
+// Add
+app.post("/api/words", async (req, res) => {
+  const data = req.body;
+  const result = await db.addWord(data.eng, data.kor);
+  res.send(result);
+});
+
+// Edit
+app.post("/api/words/edit/:id", async (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  const result = await db.editWord(data.eng, data.kor, id);
+  res.send(result);
+});
+
+// Delete
+app.post("/api/words/delete/:id", async (req, res) => {
+  const id = req.params.id;
+  const result = await db.deleteWord(id);
+  res.send(result);
 });
 
 app.get("/*", (req, res) => {
   res.sendFile("build/index.html");
 });
-
-// app.post("/api/words", (req, res) => {
-
-//   res.send("<h1>This is Word Book</h1>");
-// });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Listening on PORT ${PORT}`));
