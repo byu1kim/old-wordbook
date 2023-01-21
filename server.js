@@ -7,10 +7,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
 app.get("/api/words", async (req, res) => {
-  console.log("GET /");
   const wordbook = await db.getAll();
   res.send(wordbook);
 });
+
+// error handling (try catch in the database)
 
 // Add
 app.post("/api/words", async (req, res) => {
