@@ -16,8 +16,13 @@ app.get("/api/words", async (req, res) => {
 // Add
 app.post("/api/words", async (req, res) => {
   const data = req.body;
-  const result = await db.addWord(data.eng, data.kor);
-  res.send(result);
+  const eng = await db.getEng(data.eng);
+  if (eng.length > 0) {
+    res.send(false);
+  } else {
+    const result = await db.addWord(data.eng, data.kor);
+    res.send(result);
+  }
 });
 
 // Edit

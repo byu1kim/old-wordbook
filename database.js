@@ -19,6 +19,12 @@ export const getWord = async (id) => {
   return result;
 };
 
+export const getEng = async (eng) => {
+  const query = `SELECT * FROM words WHERE eng = ?`;
+  const [rows] = await pool.query(query, [eng]);
+  return rows;
+};
+
 export const getAll = async () => {
   const query = `SELECT * FROM words ORDER BY created DESC`;
   const [result] = await pool.query(query);
