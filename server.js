@@ -40,9 +40,9 @@ app.post("/api/words/delete/:id", async (req, res) => {
   res.send(result);
 });
 
-app.get("/*", (req, res) => {
-  res.sendFile("build/index.html");
-});
+// app.get("/*", (req, res) => {
+//   res.sendFile("build/index.html");
+// });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Listening on PORT ${PORT}`));

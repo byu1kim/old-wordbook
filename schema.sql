@@ -14,16 +14,13 @@ DROP TABLE IF EXISTS words;
 
 CREATE TABLE words (
   id integer PRIMARY KEY AUTO_INCREMENT,
+  checked BIT(1) NOT NULL DEFAULT 0,
   eng VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   kor VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL ,
   created TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-PORT=8090
-MYSQL_HOST="127.0.0.1"
-MYSQL_USER="wordbook_user"
-MYSQL_PASSWORD="MyPassword1!"
-MYSQL_DATABASE="wordbook"
+PORT=8080 MYSQL_HOST="127.0.0.1" MYSQL_USER="wordbook_user" MYSQL_PASSWORD='MyPassword1!' MYSQL_DATABASE="wordbook"
 
 -- Change a database
 ALTER DATABASE wordbook
@@ -37,3 +34,5 @@ ALTER TABLE words
 ALTER TABLE words
   CHANGE kor VARCHAR(255) 
   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
